@@ -10,9 +10,7 @@ from homeassistant.components.notify import (
     SERVICE_NOTIFY,
     BaseNotificationService,
 )
-from homeassistant.const import (
-    CONF_HOST
-)
+from . import DOMAIN, CONF_HOST, CONF_USERNAME, CONF_PASSWORD, CONF_PORT, CONF_SMSC
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,16 +33,16 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         targets = kwargs.get(ATTR_TARGET)
 
         conn = routeros_api.RouterOsApiPool(self.config[CONF_HOST], 
-                                            username="hass", 
-                                            password="xP3gF3BzE6oA7@KsE2Y}", 
+                                            self.config[CONF_USERNAME], 
+                                            self.config[CONF_PASSWORD],
                                             plaintext_login=True)
         api = conn.get_api()
         for target in targets:
             r = api.get_resource("/").call(
-                "tool/sms/send", {"port": "lte1", 
-                                    "smsc": "+447782000800", 
-                                    "phone-number": target, 
-                                    "message": message}
+                "tool/sms/send", {"port": self.config[CONF_PORT], 
+                                  "smsc": self.config[CONF_SMSC], 
+                                  "phone-number": target, 
+                                  "message": message}
             )
             _LOGGER.debug('MIKROSMS Sent to %s with response %s', target, r)
         conn.disconnect()
