@@ -1,5 +1,4 @@
 
-import asyncio
 import logging
 import routeros_api
 
@@ -10,6 +9,9 @@ from homeassistant.components.notify import (
     ATTR_TITLE_DEFAULT,
     SERVICE_NOTIFY,
     BaseNotificationService,
+)
+from homeassistant.const import (
+    CONF_HOST
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,14 +34,15 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         _LOGGER.debug("Message: %s, kwargs: %s", message, kwargs)
         targets = kwargs.get(ATTR_TARGET)
 
-        conn = routeros_api.RouterOsApiPool("192.168.88.200", 
+        conn = routeros_api.RouterOsApiPool(self.config[CONF_HOST], 
                                             username="hass", 
                                             password="xP3gF3BzE6oA7@KsE2Y}", 
                                             plaintext_login=True)
         api = conn.get_api()
         for target in targets:
             r = api.get_resource("/").call(
-                "tool/sms/send", {"port": "lte1", "smsc": "+447782000800", 
+                "tool/sms/send", {"port": "lte1", 
+                                    "smsc": "+447782000800", 
                                     "phone-number": target, 
                                     "message": message}
             )
