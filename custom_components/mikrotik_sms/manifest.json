@@ -1,0 +1,12 @@
+{
+"domain":"mikrotik_sms",
+"name":"Mikrotik SMS",
+"version":"0.1",
+"requirements":[
+    "routeros_api==0.17.0"
+],
+"documentation": "http://10.111.10.100:3000/jey/hass_mikrotik_sms",
+"issue_tracker": "http://10.111.10.100:3000/jey/hass_mikrotik_sms/issues",
+"code_owners":["@jey"]
+
+}
