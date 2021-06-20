@@ -1,7 +1,6 @@
 {
     "name": "Mikrotik SMS",
     "homeassistant": "2012.7.0",
-    "version":"0.4",
+    "version":"0.5",
     "iot_class": "assumed_state",
-    "filename": "mikrotik_router.zip"
 }

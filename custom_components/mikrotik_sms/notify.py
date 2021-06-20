@@ -1,8 +1,8 @@
 
 import logging
 
-import async_timeout
 import asyncio
+import async_timeout
 
 from homeassistant.components.notify import (
     ATTR_TARGET,
@@ -10,23 +10,21 @@ from homeassistant.components.notify import (
     SERVICE_NOTIFY,
     BaseNotificationService,
 )
-from homeassistant.helpers.reload import setup_reload_service
+
 
 from . import (
     CONF_HOST,
-    CONF_PASSWORD,
     CONF_PORT,
     CONF_SMSC,
     CONF_USERNAME,
-    DATA_SCHEMA,
     DOMAIN,
-    PLATFORMS,
-    get_api,
+    get_conn,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
-#PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(DATA_SCHEMA)
+# PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(DATA_SCHEMA)
+
 
 def get_service(hass, config, discovery_info=None):
     hass.states.async_set('%s.configured' % DOMAIN, True, {
@@ -35,7 +33,8 @@ def get_service(hass, config, discovery_info=None):
         CONF_USERNAME: config.get(CONF_USERNAME),
         CONF_SMSC: config.get(CONF_SMSC),
     })
-    return MikrotikSMSNotificationService(hass,config)
+    return MikrotikSMSNotificationService(hass, config)
+
 
 class MikrotikSMSNotificationService(BaseNotificationService):
     """Implement MikroTik SMS notification service."""
@@ -50,16 +49,16 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         _LOGGER.debug("Message: %s, kwargs: %s", message, kwargs)
         targets = kwargs.get(ATTR_TARGET)
 
-        api = get_api(self.config)
+        conn = get_conn(self.config)
         for target in targets:
             try:
                 with async_timeout.timeout(20):
                     _LOGGER.debug('MIKROSMS %s',self.config)
-                    r = api.get_resource("/").call(
+                    r = conn.get_api().get_resource("/").call(
                         "tool/sms/send", {"port": self.config[CONF_PORT],
-                                        "smsc": str(self.config.get(CONF_SMSC)),
-                                        "phone-number": str(target),
-                                        "message": message}
+                                          "smsc": str(self.config.get(CONF_SMSC)),
+                                          "phone-number": str(target),
+                                          "message": message}
                     )
                     _LOGGER.debug('MIKROSMS Sent to %s with response %s', target, r)
             except asyncio.TimeoutError:

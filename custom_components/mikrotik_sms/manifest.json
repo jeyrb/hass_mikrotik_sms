@@ -1,7 +1,7 @@
 {
     "domain":"mikrotik_sms",
     "name":"Mikrotik SMS",
-    "version":"0.4",
+    "version":"0.5",
     "requirements":[
         "routeros_api==0.17.0"
     ],
