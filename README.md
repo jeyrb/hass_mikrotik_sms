@@ -1,1 +1,1 @@
-Notify using SMS service via Mikrotik LTE router
+Notify using SMS service via LTE modem on a Mikrotik router.

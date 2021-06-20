@@ -1,23 +1,41 @@
 
 import logging
-import routeros_api
+
+import async_timeout
+import asyncio
 
 from homeassistant.components.notify import (
-    ATTR_DATA,
     ATTR_TARGET,
-    ATTR_TITLE,
-    ATTR_TITLE_DEFAULT,
+    PLATFORM_SCHEMA,
     SERVICE_NOTIFY,
     BaseNotificationService,
 )
-from . import DOMAIN, CONF_HOST, CONF_USERNAME, CONF_PASSWORD, CONF_PORT, CONF_SMSC
+from homeassistant.helpers.reload import setup_reload_service
+
+from . import (
+    CONF_HOST,
+    CONF_PASSWORD,
+    CONF_PORT,
+    CONF_SMSC,
+    CONF_USERNAME,
+    DATA_SCHEMA,
+    DOMAIN,
+    PLATFORMS,
+    get_api,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
+#PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(DATA_SCHEMA)
 
 def get_service(hass, config, discovery_info=None):
-    return MikrotikSMSNotificationService(hass, config)
-
+    hass.states.async_set('%s.configured' % DOMAIN, True, {
+        CONF_HOST: config.get(CONF_HOST),
+        CONF_PORT: config.get(CONF_PORT),
+        CONF_USERNAME: config.get(CONF_USERNAME),
+        CONF_SMSC: config.get(CONF_SMSC),
+    })
+    return MikrotikSMSNotificationService(hass,config)
 
 class MikrotikSMSNotificationService(BaseNotificationService):
     """Implement MikroTik SMS notification service."""
@@ -32,18 +50,19 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         _LOGGER.debug("Message: %s, kwargs: %s", message, kwargs)
         targets = kwargs.get(ATTR_TARGET)
 
-        conn = routeros_api.RouterOsApiPool(self.config[CONF_HOST], 
-                                            self.config[CONF_USERNAME], 
-                                            self.config[CONF_PASSWORD],
-                                            plaintext_login=True)
-        api = conn.get_api()
+        api = get_api(self.config)
         for target in targets:
-            r = api.get_resource("/").call(
-                "tool/sms/send", {"port": self.config[CONF_PORT], 
-                                  "smsc": self.config[CONF_SMSC], 
-                                  "phone-number": target, 
-                                  "message": message}
-            )
-            _LOGGER.debug('MIKROSMS Sent to %s with response %s', target, r)
+            try:
+                with async_timeout.timeout(20):
+                    _LOGGER.debug('MIKROSMS %s',self.config)
+                    r = api.get_resource("/").call(
+                        "tool/sms/send", {"port": self.config[CONF_PORT],
+                                        "smsc": str(self.config.get(CONF_SMSC)),
+                                        "phone-number": str(target),
+                                        "message": message}
+                    )
+                    _LOGGER.debug('MIKROSMS Sent to %s with response %s', target, r)
+            except asyncio.TimeoutError:
+                _LOGGER.error("Timeout accessing Mikrotik at %s", self.config[CONF_HOST])
+
         conn.disconnect()
- 

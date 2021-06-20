@@ -1,11 +1,3 @@
-# Describes the format for available notification services
-
-notify_mikrotik:
-  description: Send an SMS notification via Mikrotik router.
-  fields:
-    message:
-      description: Message body of the notification.
-      example: The garage door has been open for 10 minutes.
-    target:
-      description: An array of phone numbers to send the notification to.
-      example: platform specific
+reload:
+  name: Reload
+  description: Reload sms notify services.
