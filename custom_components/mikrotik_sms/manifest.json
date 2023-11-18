@@ -7,8 +7,8 @@
     ],
     "iot_class":"local_push",
     "config_flow": false,
-    "documentation": "http://10.111.10.100:3000/jey/hass_mikrotik_sms",
-    "issue_tracker": "http://10.111.10.100:3000/jey/hass_mikrotik_sms/issues",
+    "documentation": "https://github.com/jeyrb/hass_mikrotik_sms",
+    "issue_tracker": "https://github.com/jeyrb/hass_mikrotik_sms/issues",
     "codeowners":["@jey"]
     
     }
