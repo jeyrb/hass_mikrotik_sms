@@ -3,7 +3,7 @@
 import logging
 
 import routeros_api
-import voluptuous as vol
+
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -20,16 +20,6 @@ CONF_PASSWORD = "password"
 CONF_PORT = "port"
 DEFAULT_PORT = 'lte1'
 CONF_SMSC = "smscentre"
-
-DATA_SCHEMA = vol.Schema(
-                {
-                    vol.Required(CONF_HOST, default=DEFAULT_HOST): str,
-                    vol.Required(CONF_USERNAME, default=DEFAULT_USERNAME): str,
-                    vol.Required(CONF_PASSWORD): str,
-                    vol.Optional(CONF_PORT, default=DEFAULT_PORT): str,
-                    vol.Optional(CONF_SMSC): str,
-                }
-            )
 
 _LOGGER = logging.getLogger(__name__)
 
