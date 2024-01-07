@@ -8,7 +8,7 @@ optionally using E.164 international style.
 ## Setup
 
 Register this GitHub repo as a custom repo 
-un your [HACS]( https://hacs.xyz) configuration. 
+in your [HACS]( https://hacs.xyz) configuration. 
 
 A username and password is required on the Mikrotik router. 
 
