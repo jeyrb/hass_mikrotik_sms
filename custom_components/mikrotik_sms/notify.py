@@ -1,31 +1,36 @@
+import asyncio
 import logging
 
-import asyncio
 import async_timeout
 import voluptuous as vol
-
 from homeassistant.components.notify import (
-    ATTR_TARGET,
     ATTR_DATA,
+    ATTR_TARGET,
     PLATFORM_SCHEMA,
     BaseNotificationService,
 )
-
+from homeassistant.const import (
+    CONF_HOST,
+    CONF_PASSWORD,
+    CONF_PORT,
+    CONF_USERNAME,
+    Platform,
+)
+from homeassistant.helpers.reload import async_setup_reload_service
 
 from . import (
-    CONF_HOST,
-    CONF_PORT,
     CONF_SMSC,
-    CONF_PASSWORD,
-    CONF_USERNAME,
-    DOMAIN,
+    CONF_TIMEOUT,
     DEFAULT_HOST,
-    DEFAULT_USERNAME,
     DEFAULT_PORT,
+    DEFAULT_USERNAME,
+    DOMAIN,
     get_conn,
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+PLATFORMS = [Platform.NOTIFY]
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -34,11 +39,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Required(CONF_PASSWORD): str,
         vol.Optional(CONF_PORT, default=DEFAULT_PORT): str,
         vol.Optional(CONF_SMSC): str,
+        vol.Optional(CONF_TIMEOUT, default=20): int
     }
 )
 
 
-def get_service(hass, config, discovery_info=None):
+async def async_get_service(hass, config, discovery_info=None):
     hass.states.async_set(
         "%s.configured" % DOMAIN,
         True,
@@ -49,6 +55,7 @@ def get_service(hass, config, discovery_info=None):
             CONF_SMSC: config.get(CONF_SMSC),
         },
     )
+    await async_setup_reload_service(hass, DOMAIN, PLATFORMS)
     return MikrotikSMSNotificationService(hass, config)
 
 
@@ -59,11 +66,13 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         """Initialize the service."""
         self.hass = hass
         self.config = config
+        self.timeout = config.get(CONF_TIMEOUT,20)
         self.validate_connection()
 
     def validate_connection(self):
         conn = get_conn(self.config)
-        r = conn.get_api().get_resource("/").call("tool/sms/print")
+        with async_timeout.timeout(self.timeout):
+            r = conn.get_api().get_resource("/").call("tool/sms/print")
         _LOGGER.debug("Connected: %s", r)
 
     async def async_send_message(self, message="", **kwargs):
@@ -75,7 +84,8 @@ class MikrotikSMSNotificationService(BaseNotificationService):
             _LOGGER.info("At least 1 target phone number is required")
             return
         if len(message) > 160:
-            _LOGGER.warning("Message > 160 (%s chars), truncating" % len(message))
+            _LOGGER.warning(
+                "Message > 160 (%s chars), truncating" % len(message))
             message = message[:160]
         channel = sms_type = None
         if data:
@@ -100,10 +110,11 @@ class MikrotikSMSNotificationService(BaseNotificationService):
                     if sms_type is not None:
                         payload["type"] = sms_type
 
-                    with async_timeout.timeout(20):
+                    with async_timeout.timeout(self.timeout):
                         _LOGGER.debug("MIKROSMS %s" % self.config)
                         r = conn.get_api().get_resource("/").call("tool/sms/send", payload)
-                        _LOGGER.debug("MIKROSMS Sent to %s with response %s", target, r)
+                        _LOGGER.debug(
+                            "MIKROSMS Sent to %s with response %s", target, r)
                 except asyncio.TimeoutError:
                     _LOGGER.error(
                         "Timeout accessing Mikrotik at %s", self.config[CONF_HOST]
