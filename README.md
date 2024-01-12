@@ -7,6 +7,9 @@ optionally using E.164 international style.
 
 ## Setup
 
+Register this GitHub repo as a custom repo 
+in your [HACS]( https://hacs.xyz) configuration. 
+
 A username and password is required on the Mikrotik router. 
 
 Configure in the main Home Assistant config yaml, or an included notify.yaml
