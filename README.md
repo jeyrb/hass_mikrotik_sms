@@ -25,7 +25,7 @@ Configure in the main Home Assistant config yaml, or an included notify.yaml
 
 With the user and password added to the HomeAssistant `secrets.yaml` file
 
-Optionally an `smscentre` can also be configured.
+Optionally an `smscentre` can be configured, and also `timeout` in seconds tuned ( default 20 seconds).
 
 ## Options
 
