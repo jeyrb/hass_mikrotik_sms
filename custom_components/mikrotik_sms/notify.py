@@ -1,7 +1,8 @@
 import asyncio
 import logging
+import routeros_api
 
-import async_timeout
+from async_timeout import timeout
 import voluptuous as vol
 from homeassistant.components.notify import (
     ATTR_DATA,
@@ -24,8 +25,7 @@ from . import (
     DEFAULT_HOST,
     DEFAULT_PORT,
     DEFAULT_USERNAME,
-    DOMAIN,
-    get_conn,
+    DOMAIN
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,22 +56,46 @@ async def async_get_service(hass, config, discovery_info=None):
         },
     )
     await async_setup_reload_service(hass, DOMAIN, PLATFORMS)
-    return MikrotikSMSNotificationService(hass, config)
+    service = MikrotikSMSNotificationService(hass,
+                                             config.get(CONF_HOST),
+                                             config.get(CONF_PORT),
+                                             config.get(CONF_USERNAME),
+                                             config.get(CONF_PASSWORD),
+                                             config.get(CONF_TIMEOUT),
+                                             config.get(CONF_SMSC)
+                                             )
+    await service.initialize()
+    return service
 
 
 class MikrotikSMSNotificationService(BaseNotificationService):
     """Implement MikroTik SMS notification service."""
 
-    def __init__(self, hass, config):
+    def __init__(self, hass, host, port, username, password, timeout=20, smsc=None):
         """Initialize the service."""
         self.hass = hass
-        self.config = config
-        self.timeout = config.get(CONF_TIMEOUT,20)
-        self.validate_connection()
+        self.host = host
+        self.port = port
+        self.username = username
+        self.password = password
+        self.smsc = str(smsc) if smsc is not None else None
+        self.timeout = timeout
 
-    def validate_connection(self):
-        conn = get_conn(self.config)
-        with async_timeout.timeout(self.timeout):
+    async def initialize(self):
+        await self.validate_connection()
+
+    def get_conn(self):
+        _LOGGER.info('MIKROSMS Connecting to %s as %s',
+                     self.host, self.username)
+        conn = routeros_api.RouterOsApiPool(self.host,
+                                            self.username,
+                                            self.password,
+                                            plaintext_login=True)
+        return conn
+
+    async def validate_connection(self):
+        conn = self.get_conn()
+        async with timeout(self.timeout):
             r = conn.get_api().get_resource("/").call("tool/sms/print")
         _LOGGER.debug("Connected: %s", r)
 
@@ -96,12 +120,11 @@ class MikrotikSMSNotificationService(BaseNotificationService):
 
         conn = None
         try:
-            conn = get_conn(self.config)
+            conn = self.get_conn()
             for target in targets:
                 try:
                     payload = {
-                        "port": self.config[CONF_PORT],
-                        "smsc": str(self.config.get(CONF_SMSC)),
+                        "port": self.port,
                         "phone-number": str(target),
                         "message": message,
                     }
@@ -109,15 +132,17 @@ class MikrotikSMSNotificationService(BaseNotificationService):
                         payload["channel"] = channel
                     if sms_type is not None:
                         payload["type"] = sms_type
+                    if self.smsc is not None:
+                        payload["smsc"]=self.smsc
 
-                    with async_timeout.timeout(self.timeout):
-                        _LOGGER.debug("MIKROSMS %s" % self.config)
+                    async with timeout(self.timeout):
+                        _LOGGER.debug("MIKROSMS %s:%s", self.host, self.port)
                         r = conn.get_api().get_resource("/").call("tool/sms/send", payload)
                         _LOGGER.debug(
                             "MIKROSMS Sent to %s with response %s", target, r)
                 except asyncio.TimeoutError:
                     _LOGGER.error(
-                        "Timeout accessing Mikrotik at %s", self.config[CONF_HOST]
+                        "Timeout accessing Mikrotik at %s:%s", self.host, self.port
                     )
         finally:
             if conn is not None:

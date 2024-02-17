@@ -16,6 +16,6 @@ addopts = [
     "--cov-report=xml:cov.xml",
     "--cov-report=html",
     "--cov-report=term-missing",
-    "--cov=custom_components.supernotify",
-    "--cov-fail-under=0"
+    "--cov=custom_components.mikrotik_sms",
+    "--cov-fail-under=50"
 ]

@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.yaml": "home-assistant"
+    },
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "flake8.args": [
+        "--max-line-length=120"
+     ]
+}
