@@ -1,6 +1,5 @@
 {
     "name": "Mikrotik SMS",
     "homeassistant": "2012.7.0",
-    "version":"0.8",
     "render_readme": true
 }
