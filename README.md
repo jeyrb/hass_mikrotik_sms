@@ -2,17 +2,17 @@
 
 Notify using SMS service via LTE modem on a Mikrotik router.
 
-Sends to multiple notify targets, where each target is a phone number, 
+Sends to multiple notify targets, where each target is a phone number,
 optionally using E.164 international style.
 
 Filter out broken numbers, and control for premium rate and international numbers.
 
 ## Setup
 
-Register this GitHub repo as a custom repo 
-in your [HACS]( https://hacs.xyz) configuration. 
+Register this GitHub repo as a custom repo
+in your [HACS]( https://hacs.xyz) configuration.
 
-A username and password is required on the Mikrotik router. 
+A username and password is required on the Mikrotik router.
 
 Configure in the main Home Assistant config yaml, or an included notify.yaml
 

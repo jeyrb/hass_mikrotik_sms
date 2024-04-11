@@ -8,6 +8,17 @@
         "tests"
     ],
     "flake8.args": [
-        "--max-line-length=120"
-     ]
+        "--max-line-length=128"
+    ],
+    "python.analysis.include": [
+        "custom_components/mikrotik_sms/**",
+        "tests/**",
+        "conftest.py"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.inlayHints.callArgumentNames": "all",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.inlayHints.variableTypes": true
 }

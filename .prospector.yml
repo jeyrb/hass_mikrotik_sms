@@ -1,0 +1,36 @@
+max-line-length: 128
+test-warnings: true
+doc-warnings: true
+
+
+pycodestyle:
+  disable:
+    - W602
+    - W603
+  options:
+    max-line-length: 128
+
+pydocstyle:
+  disable:
+    - D107
+    - D203
+    - D212
+    - D407
+    - D413
+    - D414
+    - D415
+
+pylint:
+  disable:
+    - too-many-arguments
+    - missing-function-docstring
+    - missing-module-docstring
+    - missing-class-docstring
+    - consider-using-f-string
+    - unused-argument
+    - import-error
+    - too-many-locals
+
+mccabe:
+  options:
+    max-complexity: 25

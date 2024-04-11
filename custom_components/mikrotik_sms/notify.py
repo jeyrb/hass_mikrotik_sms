@@ -1,24 +1,33 @@
-import asyncio
 import logging
 
 import async_timeout
-import routeros_api
+import routeros_api  # type: ignore
 import voluptuous as vol
-from homeassistant.components.notify import (ATTR_DATA, ATTR_TARGET,
-                                             PLATFORM_SCHEMA,
-                                             BaseNotificationService)
-from homeassistant.const import (CONF_HOST, CONF_PASSWORD, CONF_PORT,
-                                 CONF_USERNAME, Platform)
+from homeassistant.components.notify import ATTR_DATA, ATTR_TARGET, PLATFORM_SCHEMA, BaseNotificationService
+from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_PORT, CONF_USERNAME, Platform
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.reload import async_setup_reload_service
-from phonenumbers import (NumberParseException, PhoneNumberFormat,
-                          PhoneNumberType, country_code_for_region,
-                          is_valid_number,
-                          format_number, number_type, parse)
+from phonenumbers import (
+    NumberParseException,
+    PhoneNumberFormat,
+    PhoneNumberType,
+    country_code_for_region,
+    format_number,
+    is_valid_number,
+    number_type,
+    parse,
+)
 
-from . import (CONF_BAN_PREMIUM, CONF_COUNTRY_CODES_ALLOWED, CONF_SMSC,
-               CONF_TIMEOUT, DEFAULT_HOST, DEFAULT_PORT, DEFAULT_USERNAME,
-               DOMAIN)
+from . import (
+    CONF_BAN_PREMIUM,
+    CONF_COUNTRY_CODES_ALLOWED,
+    CONF_SMSC,
+    CONF_TIMEOUT,
+    DEFAULT_HOST,
+    DEFAULT_PORT,
+    DEFAULT_USERNAME,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -149,7 +158,7 @@ class MikrotikSMSNotificationService(BaseNotificationService):
                         _LOGGER.debug("MIKROSMS %s:%s", self.host, self.port)
                         r = conn.get_api().get_resource("/").call("tool/sms/send", payload)
                         _LOGGER.debug("MIKROSMS Sent to %s with response %s, payload: %s", target, r, payload)
-                except asyncio.TimeoutError:
+                except TimeoutError:
                     _LOGGER.error("Timeout accessing Mikrotik at %s:%s", self.host, self.port)
         finally:
             if conn is not None:
@@ -168,7 +177,7 @@ class MikrotikSMSNotificationService(BaseNotificationService):
             return format_number(phone_number, PhoneNumberFormat.E164)
         except NumberParseException as e:
             _LOGGER.error("Invalid phone number %s: %s", number, e)
-            raise InvalidNumber(e)
+            raise InvalidNumber(e) from e
 
 
 class DisallowedNumber(BaseException):

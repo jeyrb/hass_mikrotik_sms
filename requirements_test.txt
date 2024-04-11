@@ -4,4 +4,4 @@ pytest-homeassistant-custom-component>=0.13.88
 pytest-asyncio
 pytest-unordered
 pylint
-homeassistant-stubs
+homeassistant-stubs==2024.2.2

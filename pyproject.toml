@@ -1,6 +1,29 @@
 [tool.black]
 line-length = 128
 
+[tool.pylint]
+max-line-length = 128
+disable = [
+    "C0114", # (missing-module-docstring)
+    "C0115", # (missing-class-docstring)
+    "C0116", # (missing-function-docstring)
+    "R0903", # (too-few-public-methods)
+    "R0913", # (too-many-arguments)
+    "W0105", # (pointless-string-statement)
+]
+
+[tool.flake8]
+max-line-length = 128
+ignore = "D100, D102, D104, D107, D101, D103, D205, D400, W503"
+
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 128
+
+[tool.poetry.group.dev.dependencies]
+homeassistant-stubs = "2024.2.2"
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = [

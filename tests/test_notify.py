@@ -1,6 +1,8 @@
 from unittest.mock import AsyncMock, Mock, patch
-from custom_components.mikrotik_sms.notify import DisallowedNumber, InvalidNumber, MikrotikSMSNotificationService
+
 import pytest
+
+from custom_components.mikrotik_sms.notify import DisallowedNumber, InvalidNumber, MikrotikSMSNotificationService
 
 
 async def test_send_message() -> None:
