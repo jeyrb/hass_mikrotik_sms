@@ -1,3 +1,5 @@
+[![Rhizomatics Open Source](https://avatars.githubusercontent.com/u/162821163?s=96&v=4)](https://github.com/rhizomatics)
+
 # Mikrotik SMS Notifier
 
 Notify using SMS service via LTE modem on a Mikrotik router.
@@ -40,3 +42,5 @@ See the Mikrotik documentation for understanding of those.
 
 ## Reference
 https://wiki.mikrotik.com/wiki/Manual:Tools/Sms
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
