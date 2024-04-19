@@ -12,7 +12,12 @@ async def test_send_message() -> None:
     hass.services.async_call = AsyncMock()
     with patch("custom_components.mikrotik_sms.notify.routeros_api.RouterOsApiPool") as mock_api:
         uut = MikrotikSMSNotificationService(
-            hass, host="127.0.0.1", port=9000, username="mikro_test", password="mikro_pass", timeout=10
+            hass,
+            host="127.0.0.1",
+            port="lte5",
+            username="mikro_test",
+            password="mikro_pass",  # noqa: S106
+            timeout=10,
         )
 
         await uut.initialize()
