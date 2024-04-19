@@ -2,7 +2,6 @@
 name = "mikrotik_sms"
 readme = "README.md"
 
-
 [tool.ruff]
 line-length = 128
 indent-width = 4
@@ -58,10 +57,8 @@ unfixable = ["B"]
 "**/{tests,docs}/*" = ["ANN201","ANN204","ANN001","ARG002","ARG001","ANN202","PT004","ARG001","SIM115"]
 "conftest.py" = ["ANN201","ANN204","ANN001","ARG002","ARG001","ANN202","PT004","ARG001","SIM115"]
 
-
 [tool.ruff.format]
 preview = true
-
 
 [tool.poetry.group.dev.dependencies]
 homeassistant-stubs = "2024.2.2"
