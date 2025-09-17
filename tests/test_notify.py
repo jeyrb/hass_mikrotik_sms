@@ -26,7 +26,7 @@ async def test_send_message() -> None:
         await uut.async_send_message(message="testing 123", target=["+441234999888"], data={"type": "ussd"})
         mock_call = mock_api().get_api().get_resource().call
         mock_call.assert_called_with(
-            "tool/sms/send", {"port": 9000, "phone-number": "+441234999888", "message": "testing 123", "type": "ussd"}
+            "tool/sms/send", {"port": "lte5", "phone-number": "+441234999888", "message": "testing 123", "type": "ussd"}
         )
 
 

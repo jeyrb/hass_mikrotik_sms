@@ -1,5 +1,5 @@
 {
-    "name": "Mikrotik SMS",
-    "homeassistant": "2012.7.0",
+    "name": "Mikrotik SMS Notify",
+    "homeassistant": "2025.9.0",
     "render_readme": true
 }

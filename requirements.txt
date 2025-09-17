@@ -1,4 +1,4 @@
-homeassistant>=2024.2.2
+homeassistant>=2025.9.3
 RouterOS-api>=0.17.0
 async_timeout
 phonenumbers>=8.13.0

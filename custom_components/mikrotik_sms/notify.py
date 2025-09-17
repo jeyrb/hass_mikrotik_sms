@@ -141,12 +141,12 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         try:
             phone_number = parse(str(number), self.region)
             if not is_valid_number(phone_number):
-                raise InvalidNumber("Invalid phone number %s" % number)
+                raise InvalidNumber(f"Invalid phone number {number}")
             if phone_number.country_code not in self.country_codes_allowed and 0 not in self.country_codes_allowed:
-                raise DisallowedNumber("Disallowed country code %s" % phone_number.country_code)
+                raise DisallowedNumber(f"Disallowed country code {phone_number.country_code}")
             if self.ban_premium and number_type(phone_number) == PhoneNumberType.PREMIUM_RATE:
                 _LOGGER.warning("Disallowed premium rate number %s", number)
-                raise DisallowedNumber("Disallowed premium rate number %s" % number)
+                raise DisallowedNumber(f"Disallowed premium rate number {number}")
             return format_number(phone_number, PhoneNumberFormat.E164)
         except NumberParseException as e:
             _LOGGER.error("Invalid phone number %s: %s", number, e)
@@ -167,7 +167,7 @@ async def async_get_service(
     discovery_info: DiscoveryInfoType | None = None,  # noqa: ARG001
 ) -> MikrotikSMSNotificationService:
     hass.states.async_set(
-        "%s.configured" % DOMAIN,
+        f"{DOMAIN}.configured",
         True,
         {
             CONF_HOST: config.get(CONF_HOST),

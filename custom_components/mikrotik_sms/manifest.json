@@ -1,7 +1,7 @@
 {
     "domain":"mikrotik_sms",
     "name":"Mikrotik SMS",
-    "version":"0.9.1",
+    "version":"0.9.2",
     "requirements":[
         "RouterOS-api==0.17.0",
         "phonenumbers>=8.13.0"

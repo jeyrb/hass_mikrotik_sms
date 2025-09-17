@@ -6,6 +6,7 @@ tests/__pycache__
 cov.xml
 node_modules/
 package-lock.json
+.DS_Store
 
 # C extensions
 *.so

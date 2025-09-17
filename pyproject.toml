@@ -1,11 +1,13 @@
 [project]
 name = "mikrotik_sms"
 readme = "README.md"
+version = "0.2.0"
+description = "Mikrotik SMS integration for Home Assistant"
 
 [tool.ruff]
 line-length = 128
 indent-width = 4
-target-version = "py312"
+target-version = "py313"
 exclude = [
     ".bzr",
     ".direnv",
@@ -47,7 +49,7 @@ ignore = [
     "W191","E111","E114","E117","D206","D300","Q000","Q001","COM812","COM819","ISC001","ISC002", # std formatter conflicts
     "D203","D213", # other formatter clashes
     "TD002","TD003","TD005","SIM102","SIM117","ANN002", "ANN003","SIM108",
-    "D103","D100","D101","D102","D104","D107","D415","D400","D415","ANN101","ANN401",
+    "D103","D100","D101","D102","D104","D107","D415","D400","D415","ANN401",
     "S101","C901","FURB113","PGH003",
     "S602","S607"] # subprocess usage
 unfixable = ["B"]
@@ -61,7 +63,7 @@ unfixable = ["B"]
 preview = true
 
 [tool.poetry.group.dev.dependencies]
-homeassistant-stubs = "2024.2.2"
+homeassistant-stubs = "2025.9.3"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

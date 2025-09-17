@@ -1,7 +1,7 @@
-pytest>=7.4.3
+pytest>=8.4.1
 pytest-cov
-pytest-homeassistant-custom-component>=0.13.88
+pytest-homeassistant-custom-component>=0.13.280
 pytest-asyncio
 pytest-unordered
 pylint
-homeassistant-stubs==2024.2.2
+homeassistant-stubs==2025.9.3
