@@ -63,10 +63,11 @@ mikrotik_password: your_password
 
 
 ## Reference
-https://wiki.mikrotik.com/wiki/Manual:Tools/Sms
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+(https://wiki.mikrotik.com/wiki/Manual:Tools/Sms)
 
 ## License
 
-[Apache 2.0 License](LICENSE)
+[Apache 2.0 License](../LICENSE)
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
