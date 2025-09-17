@@ -1,3 +1,4 @@
 mkdocstrings
 pymdown-extensions
 mkdocs-material
+mkdocstrings[python]

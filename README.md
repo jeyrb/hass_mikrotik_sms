@@ -69,4 +69,4 @@ https://wiki.mikrotik.com/wiki/Manual:Tools/Sms
 
 ## License
 
-[Custom License](LICENSE)
+[Apache 2.0 License](LICENSE)
