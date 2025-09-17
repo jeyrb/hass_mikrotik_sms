@@ -1,15 +1,14 @@
 {
     "domain":"mikrotik_sms",
     "name":"Mikrotik SMS",
-    "version":"0.9.2",
+    "codeowners":["@jeyrb"],
+    "config_flow": false,
+    "documentation": "https://github.com/jeyrb/hass_mikrotik_sms",
+    "iot_class":"local_push",
+    "issue_tracker": "https://github.com/jeyrb/hass_mikrotik_sms/issues",
     "requirements":[
         "RouterOS-api==0.17.0",
         "phonenumbers>=8.13.0"
     ],
-    "iot_class":"local_push",
-    "config_flow": false,
-    "documentation": "https://github.com/jeyrb/hass_mikrotik_sms",
-    "issue_tracker": "https://github.com/jeyrb/hass_mikrotik_sms/issues",
-    "codeowners":["@jeyrb"]
-
-    }
+    "version":"0.9.2"
+}
