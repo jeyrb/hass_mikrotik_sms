@@ -2,3 +2,5 @@ mkdocstrings
 pymdown-extensions
 mkdocs-material
 mkdocstrings[python]
+mkdocs-autorefs
+mkdocs-coverage

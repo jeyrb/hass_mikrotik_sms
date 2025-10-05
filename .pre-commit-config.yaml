@@ -14,7 +14,7 @@ repos:
       - id: pyupgrade
         args: [--py313-plus]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.0
+    rev: v0.13.3
     hooks:
      # Run the linter.
       - id: ruff
@@ -47,7 +47,7 @@ repos:
         stages: [manual]
       - id: check-json
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.18.1'
+    rev: 'v1.18.2'
     hooks:
       - id: mypy
         args:

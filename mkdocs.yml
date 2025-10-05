@@ -11,8 +11,16 @@ theme:
     - content.code.copy
     - content.code.select
     - content.code.annotate
+
+nav:
+- Coverage report: coverage.md
+
+
 plugins:
   - search
+  - coverage:
+      page_path: coverage
+      html_report_dir: htmlcov
   - mkdocstrings:
       handlers:
         # See: https://mkdocstrings.github.io/python/usage/

@@ -12,6 +12,7 @@ Notify implementation using the SMS service provided by an LTE modem on Mikrotik
 - Customizable country code restrictions
 - Easy integration with Home Assistant via HACS
 - Optionally use E.164 international style phone numbers
+- Standard Home Assistant notify usage
 
 ## Setup
 
@@ -61,6 +62,21 @@ mikrotik_password: your_password
 - In the notification data section, `type` and `channel` can optionally be specified.
   - See the Mikrotik documentation for understanding of those.
 
+## Usage
+
+There is no separate `action` for this, it implements a notify platform. All you need is a message and a target phone number. Optionally, the `data` section can include `channel`, `type`, `smsc` and `port` to override the configuration values.
+
+### Example Service Call
+
+```yaml
+- service:  notify.mikrotik_sms
+    data:
+      message: Front doorbell pressed
+      target:
+          - '+44790381310'
+```
+
+For more sophisticated usage, see the [SMS](https://jeyrb.github.io/hass_supernotify/#sms) support available in the [Supernotifier](https://jeyrb.github.io/hass_supernotify/) notify custom component. This will allow SMS to be sent alongside other means, like mobile push, email or voice notifications, and also supports associating phone numbers with people.
 
 ## Reference
 
