@@ -63,3 +63,10 @@ repos:
           - phonenumbers
           - async_timeout
           - RouterOS-api
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: '1.8.6'
+    hooks:
+    - id: bandit
+      args: ["-c", "pyproject.toml"]
+      additional_dependencies: ["bandit[toml]"]
