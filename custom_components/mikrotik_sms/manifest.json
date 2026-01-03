@@ -7,8 +7,8 @@
     "iot_class":"local_push",
     "issue_tracker": "https://github.com/jeyrb/hass_mikrotik_sms/issues",
     "requirements":[
-        "RouterOS-api==0.17.0",
+        "RouterOS-api>=0.17.0",
         "phonenumbers>=8.13.0"
     ],
-    "version":"0.9.2"
+    "version":"0.9.3"
 }

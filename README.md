@@ -76,7 +76,7 @@ There is no separate `action` for this, it implements a notify platform. All you
           - '+44790381310'
 ```
 
-For more sophisticated usage, see the [SMS](https://jeyrb.github.io/hass_supernotify/#sms) support available in the [Supernotifier](https://jeyrb.github.io/hass_supernotify/) notify custom component. This will allow SMS to be sent alongside other means, like mobile push, email or voice notifications, and also supports associating phone numbers with people.
+For more sophisticated usage, see the [SMS](https://supernotify.rhizomatics.org.uk/transports/sms/) support available in [Supernotify](https://supernotify.rhizomatics.org.uk/) on official HACS. This will allow SMS to be sent alongside other means, like mobile push, email or voice notifications, and also supports associating phone numbers with people.
 
 ## Reference
 

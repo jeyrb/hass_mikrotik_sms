@@ -1,4 +1,8 @@
-homeassistant>=2025.9.3
+homeassistant==2025.12.1
 RouterOS-api>=0.17.0
 async_timeout
-phonenumbers>=8.13.0
+phonenumbers>=9.0.0
+pycares==4.9
+aiohttp==3.13.2
+aiodns==3.5.0
+aiofiles==24.1.0

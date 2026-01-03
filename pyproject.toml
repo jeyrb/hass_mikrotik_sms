@@ -1,7 +1,7 @@
 [project]
 name = "mikrotik_sms"
 readme = "README.md"
-version = "0.2.0"
+version = "0.9.3"
 description = "Mikrotik SMS integration for Home Assistant"
 
 [tool.ruff]
