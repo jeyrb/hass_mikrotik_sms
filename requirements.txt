@@ -3,6 +3,6 @@ RouterOS-api>=0.17.0
 async_timeout
 phonenumbers>=9.0.0
 pycares==4.9
-aiohttp==3.13.3
+aiohttp==3.13.4
 aiodns==3.5.0
 aiofiles==24.1.0
