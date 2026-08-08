@@ -1,8 +1,75 @@
 [project]
 name = "mikrotik_sms"
 readme = "README.md"
-version = "0.9.3"
 description = "Mikrotik SMS integration for Home Assistant"
+dynamic = ["version"]
+requires-python = ">=3.13.2"
+
+dependencies = [
+    "homeassistant>=2026.8.0; python_full_version >= '3.14.2'",
+    "homeassistant<2026.3.0; python_full_version < '3.14.2'",
+    "RouterOS-api>=0.17.0",
+    "async_timeout",
+    "phonenumbers>=9.0.0",
+    "pycares",
+    "aiohttp",
+    "aiodns",
+    "aiofiles",
+]
+
+[dependency-groups]
+dev=[
+    "homeassistant-stubs",
+    "pytest>=9.0.3; python_full_version >= '3.14.2'",
+    "pytest==9.0.0; python_full_version < '3.14.2'",
+    "pytest-cov",
+    "pytest-homeassistant-custom-component>=0.13.348;python_full_version >= '3.14.2'",
+    "pytest-homeassistant-custom-component<0.13.348;python_full_version < '3.14.2'",
+    "pytest-asyncio",
+    "pytest-unordered",
+    "pytest-mock",
+    "pytest-xdist",
+    "pytest-icdiff",
+    "pre-commit",
+    "ruff>=0.16.0; python_full_version >= '3.14.2'",
+    "ruff<0.16.0; python_full_version < '3.14.2'",
+    "codespell",
+    "mypy",
+    "genbadge[all]",
+]
+
+docs=[
+    "mkdocs-material[imaging]",
+    "mkdocstrings",
+    "mkdocstrings-python",
+    "mkdocs-minify-plugin",
+    "mkdocs-material-extensions",
+    "pymdown-extensions",
+    "mkdocs-autorefs",
+    "mkdocs-pagetree-plugin",
+    "mkdocs<2.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = [
+    "custom_components",
+] # list of folders that contain the packages (["."] by default)
+include = [
+    "mikrotik_sms*",
+] # package names should match these glob patterns (["*"] by default)
+exclude = [
+    "tests.components.mikrotik_sms.*",
+] # exclude packages matching these glob patterns (empty by default)
+namespaces = true # to disable scanning PEP 420 namespaces (true by default)
+
+
+[tool.hatch.version]
+path = "custom_components/mikrotik_sms/manifest.json"
+pattern = '"version": "(?P<version>[^"]+)"'
+
+[tool.poetry]
+package-mode = false
+packages = [{ include = "custom_components.mikrotik_sms" }]
 
 [tool.ruff]
 line-length = 128
@@ -41,10 +108,26 @@ exclude = [
     "venv",
 ]
 
+[tool.uv]
+# Skip the 3.14.0-3.14.1 gap: HA 2026.3+ requires >=3.14.2, so those patch
+# versions are unusable regardless.
+environments = [
+    "python_full_version < '3.14'",
+    "python_full_version >= '3.14.2'",
+]
+override-dependencies = [
+    "homeassistant==2026.2.3; python_full_version < '3.14.2'",
+    "homeassistant>=2026.8.0; python_full_version >= '3.14.2'",
+    "homeassistant-stubs==2026.2.3; python_full_version < '3.14.2'",
+    "homeassistant-stubs>=2026.8.0; python_full_version >= '3.14.2'",
+
+]
+exclude-newer = "5 days"
+exclude-newer-package = { ruff="2 days",homeassistant=false,homeassistant-stubs=false }
+add-bounds = "major"
+
 [tool.ruff.lint]
 preview = false
-select = ["E", "C","R", "F", "B", "W", "I", "C90", "N", "D", "UP", "YTT",
-"RUF","PGH","PT","T20","DTZ","TD","PTH","ARG","INT","TCH","TID","SIM","PERF","ASYNC","ANN","S","A","COM","C4"]
 ignore = [
     "W191","E111","E114","E117","D206","D300","Q000","Q001","COM812","COM819","ISC001","ISC002", # std formatter conflicts
     "D203","D213", # other formatter clashes
@@ -65,8 +148,12 @@ preview = true
 [tool.bandit]
 exclude_dirs = ["tests"]
 
-[tool.poetry.group.dev.dependencies]
-homeassistant-stubs = "2025.9.3"
+[tool.codespell]
+ignore-words-list = "HASS,hass,alot,NotIn,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,astroid"
+# Skip binary/data files, build artifacts, and non-English markdown (locale-named files and locale dirs)
+skip = "*.csv,*.json,./.*,./site,./htmlcov,README.??.md,./README.??-??.md,./docs/??/*.md,./docs/??-??/*.md"
+quiet-level = 2
+
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
