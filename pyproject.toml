@@ -43,6 +43,7 @@ docs=[
     "mkdocstrings",
     "mkdocstrings-python",
     "mkdocs-minify-plugin",
+    "mkdocs-coverage",
     "mkdocs-material-extensions",
     "pymdown-extensions",
     "mkdocs-autorefs",
