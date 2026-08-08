@@ -164,7 +164,7 @@ class InvalidNumber(BaseException):
 async def async_get_service(
     hass: HomeAssistant,
     config: ConfigType,
-    discovery_info: DiscoveryInfoType | None = None,  # noqa: ARG001
+    discovery_info: DiscoveryInfoType | None = None,
 ) -> MikrotikSMSNotificationService:
     hass.states.async_set(
         f"{DOMAIN}.configured",

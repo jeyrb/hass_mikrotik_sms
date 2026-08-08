@@ -16,7 +16,7 @@ async def test_send_message() -> None:
             host="127.0.0.1",
             port="lte5",
             username="mikro_test",
-            password="mikro_pass",  # noqa: S106
+            password="mikro_pass",
             timeout=10,
         )
 
