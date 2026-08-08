@@ -56,7 +56,7 @@ repos:
           - --show-error-codes
           - --show-error-context
         additional_dependencies:
-          - homeassistant-stubs==2025.9.3
+          - homeassistant-stubs==2026.8.0
           - types-python-slugify==8.0.0.2
           - voluptuous-stubs==0.1.1
           - pytest
