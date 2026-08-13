@@ -4,11 +4,11 @@
     "codeowners":["@jeyrb"],
     "config_flow": false,
     "documentation": "https://github.com/jeyrb/hass_mikrotik_sms",
-    "iot_class":"local_push",
+    "iot_class":"local",
     "issue_tracker": "https://github.com/jeyrb/hass_mikrotik_sms/issues",
     "requirements":[
         "RouterOS-api>=0.17.0",
         "phonenumbers>=8.13.0"
     ],
-    "version":"0.9.4"
+    "version":"0.9.5"
 }

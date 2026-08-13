@@ -72,7 +72,7 @@ class MikrotikSMSNotificationService(BaseNotificationService):
         self.timeout = timeout
         self.region = hass.config.country
         self.ban_premium = ban_premium
-        self.country_codes_allowed = country_codes_allowed or []
+        self.country_codes_allowed: list[int] = list(country_codes_allowed) if country_codes_allowed else []
         if self.region:
             self.country_codes_allowed.append(country_code_for_region(self.region))
 
@@ -153,11 +153,11 @@ class MikrotikSMSNotificationService(BaseNotificationService):
             raise InvalidNumber(e) from e
 
 
-class DisallowedNumber(BaseException):
+class DisallowedNumber(Exception):
     pass
 
 
-class InvalidNumber(BaseException):
+class InvalidNumber(Exception):
     pass
 
 
@@ -185,7 +185,7 @@ async def async_get_service(
         config.get(CONF_PORT),
         config.get(CONF_USERNAME),
         config.get(CONF_PASSWORD),
-        config.get(CONF_TIMEOUT, 10),
+        config.get(CONF_TIMEOUT, 20),
         config.get(CONF_SMSC),
         config.get(CONF_COUNTRY_CODES_ALLOWED),
         config.get(CONF_BAN_PREMIUM, True),
