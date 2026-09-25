@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v7.0.1
+    - name: Package release zip
+      run: |
+        cd custom_components/mikrotik_sms
+        zip -r "${{ github.workspace }}/mikrotik_sms.zip" . -x "__pycache__/*" "*/__pycache__/*"
+    - name: Upload release zip asset
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh release upload "${{ github.event.release.tag_name }}" mikrotik_sms.zip --clobber
