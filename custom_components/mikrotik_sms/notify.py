@@ -128,9 +128,12 @@ class MikrotikSMSNotificationService(BaseNotificationService):
                         payload["smsc"] = self.smsc
 
                     async with async_timeout.timeout(self.timeout):
-                        _LOGGER.debug("MIKROSMS %s:%s", self.host, self.port)
-                        r = conn.get_api().get_resource("/").call("tool/sms/send", payload)
-                        _LOGGER.debug("MIKROSMS Sent to %s with response %s, payload: %s", target, r, payload)
+                        if conn is None:
+                            _LOGGER.error("MIKROSMS Connection not available for send at %s:%s", self.host, self.port)
+                        else:
+                            _LOGGER.debug("MIKROSMS %s:%s", self.host, self.port)
+                            r = conn.get_api().get_resource("/").call("tool/sms/send", payload)
+                            _LOGGER.debug("MIKROSMS Sent to %s with response %s, payload: %s", target, r, payload)
                 except TimeoutError:
                     _LOGGER.error("Timeout accessing Mikrotik at %s:%s", self.host, self.port)
         finally:
