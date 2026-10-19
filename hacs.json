@@ -1,6 +1,6 @@
 {
     "name": "Mikrotik SMS Notify",
-    "homeassistant": "2025.9.0",
+    "homeassistant": "2026.4.0",
     "render_readme": true,
     "zip_release": true,
     "filename": "mikrotik_sms.zip"

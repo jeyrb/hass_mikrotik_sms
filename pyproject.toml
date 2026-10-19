@@ -3,11 +3,10 @@ name = "mikrotik_sms"
 readme = "README.md"
 description = "Mikrotik SMS integration for Home Assistant"
 dynamic = ["version"]
-requires-python = ">=3.13.2"
+requires-python = ">=3.14.2"
 
 dependencies = [
-    "homeassistant>=2026.9.0; python_full_version >= '3.14.2'",
-    "homeassistant<2026.3.0; python_full_version < '3.14.2'",
+    "homeassistant>=2026.4.0",
     "RouterOS-api>=0.21.0",
     "async_timeout",
     "phonenumbers>=9.0.41",
@@ -20,19 +19,16 @@ dependencies = [
 [dependency-groups]
 dev=[
     "homeassistant-stubs",
-    "pytest>=9.0.3; python_full_version >= '3.14.2'",
-    "pytest==9.0.0; python_full_version < '3.14.2'",
+    "pytest>=9.0.3",
     "pytest-cov",
-    "pytest-homeassistant-custom-component>=0.13.348;python_full_version >= '3.14.2'",
-    "pytest-homeassistant-custom-component<0.13.348;python_full_version < '3.14.2'",
+    "pytest-homeassistant-custom-component>=0.13.348",
     "pytest-asyncio",
     "pytest-unordered",
     "pytest-mock",
     "pytest-xdist",
     "pytest-icdiff",
     "pre-commit",
-    "ruff>=0.16.0; python_full_version >= '3.14.2'",
-    "ruff<0.16.0; python_full_version < '3.14.2'",
+    "ruff>=0.16.0",
     "codespell",
     "mypy",
     "genbadge[all]",
@@ -75,7 +71,7 @@ packages = [{ include = "custom_components.mikrotik_sms" }]
 [tool.ruff]
 line-length = 128
 indent-width = 4
-target-version = "py313"
+target-version = "py314"
 exclude = [
     ".bzr",
     ".direnv",
@@ -110,25 +106,15 @@ exclude = [
 ]
 
 [tool.uv]
-# Skip the 3.14.0-3.14.1 gap: HA 2026.3+ requires >=3.14.2, so those patch
-# versions are unusable regardless.
 environments = [
-    "python_full_version < '3.14'",
     "python_full_version >= '3.14.2'",
-]
-override-dependencies = [
-    "homeassistant==2026.2.3; python_full_version < '3.14.2'",
-    "homeassistant>=2026.8.0; python_full_version >= '3.14.2'",
-    "homeassistant-stubs==2026.2.3; python_full_version < '3.14.2'",
-    "homeassistant-stubs>=2026.8.0; python_full_version >= '3.14.2'",
-
 ]
 exclude-newer = "5 days"
 exclude-newer-package = { ruff="2 days",homeassistant=false,homeassistant-stubs=false }
 add-bounds = "major"
 
 [tool.ruff.lint]
-preview = false
+preview = true
 ignore = [
     "W191","E111","E114","E117","D206","D300","Q000","Q001","COM812","COM819","ISC001","ISC002", # std formatter conflicts
     "D203","D213", # other formatter clashes
