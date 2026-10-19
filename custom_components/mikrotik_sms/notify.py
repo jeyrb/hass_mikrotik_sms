@@ -3,7 +3,9 @@ import logging
 import async_timeout
 import routeros_api  # type: ignore
 import voluptuous as vol
-from homeassistant.components.notify import ATTR_DATA, ATTR_TARGET, PLATFORM_SCHEMA, BaseNotificationService
+from homeassistant.components.notify import PLATFORM_SCHEMA
+from homeassistant.components.notify.const import ATTR_DATA, ATTR_TARGET
+from homeassistant.components.notify.legacy import BaseNotificationService
 from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_PORT, CONF_USERNAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
