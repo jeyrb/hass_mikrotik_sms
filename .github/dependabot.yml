@@ -1,18 +1,50 @@
+# Dependency updates. Shape shared across rhizomatics repos: see templates/README.md in rhizomatics/.github.
+# Version updates run on the 1st and 15th; security updates are raised as soon as an alert opens.
 version: 2
 updates:
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      # Check for updates to GitHub Actions every week
-      interval: "weekly"
+      interval: cron
+      cronjob: "0 6 1,15 * *"
+    cooldown:
+      default-days: 7
+    groups:
+      # Trusted: auto-merged by admin-dependabot-automerge.yml once checks pass.
+      astral:
+        patterns: ["astral-sh/*"]
+      actions:
+        patterns: ["*"]
+        update-types: [minor, patch]
+      actions-security:
+        applies-to: security-updates
+        patterns: ["*"]
 
   - package-ecosystem: pip
-    directory: "/"
+    directory: /
+    versioning-strategy: increase-if-necessary
     schedule:
-      interval: weekly
-      time: "13:00"
+      interval: cron
+      cronjob: "0 6 1,15 * *"
+    cooldown:
+      default-days: 7
+    # Transitive deps (zeroconf, aiohttp, ...) are pinned by homeassistant and
+    # differ per Python fork in uv.lock; Dependabot can't bump them per fork.
+    allow:
+      - dependency-type: direct
+        # Inherited from Home Assistant / its test harness: follow the platform, don't bump.
+    ignore:
+      - dependency-name: homeassistant
+      - dependency-name: pytest-homeassistant-custom-component
+      - dependency-name: pytest
+      - dependency-name: zeroconf
     groups:
-      python-packages:
-        patterns:
-          - "*"
+      # Trusted: auto-merged by admin-dependabot-automerge.yml once checks pass.
+      astral:
+        patterns: ["uv", "ruff", "ty"]
+      pip:
+        patterns: ["*"]
+        update-types: [minor, patch]
+      pip-security:
+        applies-to: security-updates
+        patterns: ["*"]
