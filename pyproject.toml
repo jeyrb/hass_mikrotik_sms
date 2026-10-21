@@ -110,7 +110,7 @@ environments = [
     "python_full_version >= '3.14.2'",
 ]
 exclude-newer = "5 days"
-exclude-newer-package = { ruff="2 days",homeassistant=false,homeassistant-stubs=false }
+exclude-newer-package = { certifi=false, ruff="2 days",homeassistant=false,homeassistant-stubs=false }
 add-bounds = "major"
 
 [tool.ruff.lint]
