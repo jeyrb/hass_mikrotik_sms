@@ -10,7 +10,7 @@ Notify implementation using the SMS service provided by an LTE modem on Mikrotik
 - Supports multiple recipients
 - Filters invalid, premium-rate, and international numbers
 - Customizable country code restrictions
-- Easy integration with Home Assistant via HACS
+- Easy integration with Home Assistant via Marketplace (previously *HACS*)
 - Optionally use E.164 international style phone numbers
 - Standard Home Assistant notify usage
 
@@ -20,13 +20,13 @@ Notify implementation using the SMS service provided by an LTE modem on Mikrotik
 
 - Home Assistant installed and running
 - Mikrotik router with LTE modem and SMS capability
-- HACS (Home Assistant Community Store) installed
+- Home Assistant Marketplace enabled in *Settings*
 
 ### Installation
 
 1. Register this GitHub repo as a custom repo
-in your [HACS]( https://hacs.xyz) configuration.
-2. Install the integration via HACS.
+in your [Home Assistant Marketplace](https://www.home-assistant.io/integrations/marketplace/) configuration.
+2. Install the integration via Home Assistant Marketplace.
 
 ### Configuration
 
@@ -76,7 +76,7 @@ There is no separate `action` for this, it implements a notify platform. All you
           - '+44790381310'
 ```
 
-For more sophisticated usage, see the [SMS](https://supernotify.rhizomatics.org.uk/transports/sms/) support available in [Supernotify](https://supernotify.rhizomatics.org.uk/) on official HACS. This will allow SMS to be sent alongside other means, like mobile push, email or voice notifications, and also supports associating phone numbers with people.
+For more sophisticated usage, see the [SMS](https://supernotify.rhizomatics.org.uk/transports/sms/) support available in [Supernotify](https://supernotify.rhizomatics.org.uk/) on official Marketplace. This will allow SMS to be sent alongside other means, like mobile push, email or voice notifications, and also supports associating phone numbers with people.
 
 ## Reference
 
